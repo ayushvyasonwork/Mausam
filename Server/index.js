@@ -3,9 +3,7 @@ const app=express();
 const cors = require('cors');
 require('dotenv').config();
 const PORT=process.env.PORT || 4000;
-app.use(cors({
-    origin: 'http://localhost:5173'
-  }));
+app.use(cors());
 // weather api middleware 
 app.use(express.json());
 // import route 
