@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: |
+          Client/package-lock.json
+          Server/package-lock.json
+
+    - name: Install Client dependencies
+      run: |
+        cd Client
+        npm ci
+
+    - name: Install Server dependencies
+      run: |
+        cd Server
+        npm ci
+
+    - name: Lint Client
+      run: |
+        cd Client
+        npm run lint
+
+    - name: Build Client
+      run: |
+        cd Client
+        npm run build
+
+    - name: Archive production artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist-${{ matrix.node-version }}
+        path: Client/dist/
+        retention-days: 7
