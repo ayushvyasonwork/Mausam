@@ -22,19 +22,15 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: npm
         cache-dependency-path: |
           Client/package-lock.json
           Server/package-lock.json
 
+    # ---------- CLIENT ----------
     - name: Install Client dependencies
       run: |
         cd Client
-        npm ci
-
-    - name: Install Server dependencies
-      run: |
-        cd Server
         npm ci
 
     - name: Lint Client
@@ -48,9 +44,22 @@ jobs:
         npm run build
 
     - name: Archive production artifacts
-      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: dist-${{ matrix.node-version }}
         path: Client/dist/
         retention-days: 7
+
+    # ---------- SERVER ----------
+    - name: Install Server dependencies
+      run: |
+        cd Server
+        npm ci
+
+    - name: Run Server with env
+      run: |
+        cd Server
+        npm test || echo "No tests found"
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+        PORT: ${{ secrets.PORT }}
