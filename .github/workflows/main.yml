@@ -49,6 +49,11 @@ jobs:
         name: dist-${{ matrix.node-version }}
         path: Client/dist/
         retention-days: 7
+    
+    - name: Deploy frontend to Nginx
+      run: |
+        sudo rm -rf /var/www/html/*
+        sudo cp -r Client/dist/* /var/www/html/
 
     # ---------- SERVER ----------
     - name: Install Server dependencies
