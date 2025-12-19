@@ -14,6 +14,6 @@ app.use('/api/v1',weatherRoute);
 app.listen(PORT,()=>{
     console.log(`server started at port ${PORT}`);
 })
-app.get('/',(req,res)=>{
+app.get('/api',(req,res)=>{
     res.send(`<h1> server is live </h1>`);
 })
