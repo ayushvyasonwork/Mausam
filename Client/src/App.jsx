@@ -29,7 +29,7 @@ function App() {
       setWeather(null);
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300 to-blue-600 p-4 text-white flex flex-col items-center gap-4">
       <Header />
