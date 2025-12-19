@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 // import route 
 const weatherRoute=require('./router');
-app.use('api/v1',weatherRoute);
+app.use('/api/v1',weatherRoute);
 // start server 
 app.listen(PORT,()=>{
     console.log(`server started at port ${PORT}`);
