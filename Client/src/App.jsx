@@ -20,10 +20,8 @@ function App() {
     console.log(`This is before axios POST: ${city}`);
 
     try {
-      const response = await axios.post(`${api}/api/v1/getweather`, { city });
-
+      const response = await axios.post(`${api}/getweather`, { city });
       if (!response.data) throw new Error('City not found');
-
       setWeather(response.data);
       setError('');
     } catch (err) {
@@ -100,5 +98,4 @@ const WeatherInfo = ({ weather }) => (
     </div>
   </div>
 );
-
 export default App;
