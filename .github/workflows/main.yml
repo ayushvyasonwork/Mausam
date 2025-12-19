@@ -67,3 +67,7 @@ jobs:
         touch .env
         echo "${{secrets.PROD_BACKEND_ENV}}" >> .env
       
+    - name: Start backend with PM2
+      working-directory: ./Server
+      run: |
+        /home/ubuntu/.nvm/versions/node/v24.12.0/bin/pm2 restart backend || /home/ubuntu/.nvm/versions/node/v24.12.0/bin/pm2 start index.js --name backend
