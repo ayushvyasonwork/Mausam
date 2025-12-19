@@ -37,7 +37,11 @@ jobs:
       run: |
         cd Client
         npm run lint
-
+    - name: Create frontend .env file
+      working-directory: ./Client
+      run: |
+          touch .env
+          echo "${{ secrets.PROD_FRONTEND_ENV }}" > .env
     - name: Build Client
       run: |
         cd Client
