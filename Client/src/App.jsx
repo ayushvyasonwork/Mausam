@@ -20,7 +20,7 @@ function App() {
     console.log(`This is before axios POST: ${city}`);
 
     try {
-      const response = await axios.post(`${api}/getweather`, { city });
+      const response = await axios.post(`${api}getweather`, { city });
       if (!response.data) throw new Error('City not found');
       setWeather(response.data);
       setError('');
@@ -29,7 +29,7 @@ function App() {
       setWeather(null);
     }
   };
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300 to-blue-600 p-4 text-white flex flex-col items-center gap-4">
       <Header />
